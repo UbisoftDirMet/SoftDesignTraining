@@ -13,6 +13,9 @@ ASoftDesignTrainingCharacter::ASoftDesignTrainingCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
+	//fixme
+	//Adding this comment to document Gitlab commit
+
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Rotate character to moving direction
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 640.f, 0.f);
