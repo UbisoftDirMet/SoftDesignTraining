@@ -32,6 +32,16 @@ protected:
 	/** Input handlers for SetDestination action. */
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
+
+
+    /** Handle direct nav input*/
+    void MoveForward(float value);
+    void MoveRight(float value);
+
+    /** Cover inputs*/
+    void OnTakeCoverPressed();
+    bool ValidateCover(FHitResult& coverHitResult);
+
 };
 
 

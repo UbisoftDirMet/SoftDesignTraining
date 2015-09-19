@@ -4,6 +4,8 @@
 #include "SoftDesignTrainingPlayerController.h"
 #include "AI/Navigation/NavigationSystem.h"
 
+#include "DrawDebugHelpers.h"
+
 ASoftDesignTrainingPlayerController::ASoftDesignTrainingPlayerController()
 {
 	bShowMouseCursor = true;
@@ -28,10 +30,14 @@ void ASoftDesignTrainingPlayerController::SetupInputComponent()
 
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ASoftDesignTrainingPlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &ASoftDesignTrainingPlayerController::OnSetDestinationReleased);
+    InputComponent->BindAction("TakeCover", IE_Pressed, this, &ASoftDesignTrainingPlayerController::OnTakeCoverPressed);
 
 	// support touch devices 
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ASoftDesignTrainingPlayerController::MoveToTouchLocation);
 	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &ASoftDesignTrainingPlayerController::MoveToTouchLocation);
+
+    InputComponent->BindAxis("MoveForward", this, &ASoftDesignTrainingPlayerController::MoveForward);
+    InputComponent->BindAxis("MoveRight", this, &ASoftDesignTrainingPlayerController::MoveRight);
 }
 
 void ASoftDesignTrainingPlayerController::MoveToMouseCursor()
@@ -87,4 +93,63 @@ void ASoftDesignTrainingPlayerController::OnSetDestinationReleased()
 {
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
+}
+
+void ASoftDesignTrainingPlayerController::MoveForward(float value)
+{
+    APawn* const Pawn = GetPawn();
+
+    if (Pawn)
+    {
+        Pawn->AddMovementInput(FVector(value, 0.0f, 0.0f));
+    }
+}
+
+void ASoftDesignTrainingPlayerController::MoveRight(float value)
+{
+    APawn* const Pawn = GetPawn();
+
+    if (Pawn)
+    {
+        Pawn->AddMovementInput(FVector(0.0f, value, 0.0f));
+    }
+}
+
+void ASoftDesignTrainingPlayerController::OnTakeCoverPressed()
+{
+    APawn* const Pawn = GetPawn();
+
+    if (Pawn)
+    {
+        FVector actorLocation = Pawn->GetActorLocation();
+        FRotator actorRotation = Pawn->GetActorRotation();
+        FVector coverTestStart = actorLocation;
+        FVector coverTestEnd = actorLocation + 400.0f * actorRotation.Vector();
+
+        UWorld* currentWorld = GetWorld();
+
+        //DrawDebugLine(currentWorld, actorLocation, coverTestEnd, FColor::Magenta, false, 1.0f);
+        //DrawDebugSphere(currentWorld, actorLocation, 10.0f, 10, FColor::Magenta, false, 1.0f);
+
+        static FName InitialCoverSweepTestName = TEXT("InitialCoverSweepTest");
+        FHitResult hitResult;
+        FQuat shapeRot = FQuat::Identity;
+        FCollisionShape collShape = FCollisionShape::MakeSphere(Pawn->GetSimpleCollisionRadius());
+        FCollisionQueryParams collQueryParams(InitialCoverSweepTestName, false, Pawn);
+        currentWorld->DebugDrawTraceTag = InitialCoverSweepTestName;
+        FCollisionObjectQueryParams collObjQueryParams(ECC_WorldStatic);
+        
+        if (currentWorld->SweepSingle(hitResult, coverTestStart, coverTestEnd, shapeRot, collShape, collQueryParams, collObjQueryParams))
+        {
+            if (ValidateCover(hitResult))
+            {
+
+            }
+        }
+    }
+}
+
+bool ASoftDesignTrainingPlayerController::ValidateCover(FHitResult& coverHitResult)
+{
+    return true;
 }
