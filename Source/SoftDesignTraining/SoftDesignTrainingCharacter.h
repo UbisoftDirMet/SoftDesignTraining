@@ -24,5 +24,23 @@ public:
 	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
+
+    /** Set by character movement to specify that this Character is currently in cover. */
+    //UPROPERTY(BlueprintReadOnly, replicatedUsing = OnRep_IsCrouched, Category = Character)
+    UPROPERTY(BlueprintReadOnly, Category = Character)
+    uint32 bIsInHighCover : 1;
+
+    UPROPERTY(BlueprintReadOnly, Category = Character)
+    uint32 bIsInLowCover : 1;
+
+    UPROPERTY(BlueprintReadOnly, Category = Character)
+    uint32 bIsInCover : 1;
+
+    UFUNCTION(BlueprintCallable, Category = "Pawn|Character")
+        virtual void Cover(const FVector& worldPosition);
+
+    UFUNCTION(BlueprintCallable, Category = "Pawn|Character")
+        virtual void StopCover();
 };
 

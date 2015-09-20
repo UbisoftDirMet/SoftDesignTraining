@@ -139,7 +139,7 @@ void ASoftDesignTrainingPlayerController::OnTakeCoverPressed()
         currentWorld->DebugDrawTraceTag = InitialCoverSweepTestName;
         FCollisionObjectQueryParams collObjQueryParams(ECC_WorldStatic);
         
-        if (currentWorld->SweepSingle(hitResult, coverTestStart, coverTestEnd, shapeRot, collShape, collQueryParams, collObjQueryParams))
+        if (currentWorld->SweepSingleByObjectType(hitResult, coverTestStart, coverTestEnd, shapeRot, collObjQueryParams, collShape, collQueryParams))
         {
             if (ValidateCover(hitResult))
             {
