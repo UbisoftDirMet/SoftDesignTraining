@@ -3,6 +3,7 @@
 #include "SoftDesignTraining.h"
 #include "ReactionManager.h"
 #include "DrawDebugHelpers.h"
+#include "Engine/World.h"
 
 ReactionManager* ReactionManager::m_Instance;
 
@@ -36,7 +37,7 @@ void ReactionManager::UnregisterNPC(ACharacter* npcCharacter)
 	m_NPCList.Remove(npcCharacter);
 }
 
-void ReactionManager::CreateReactionEvent(FVector targetPosition, float radiusSQ, ReactionType reactionType)
+void ReactionManager::CreateReactionEvent(FVector targetPosition, float radiusSQ, ReactionType reactionType, ReactionLOS reactionLOS)
 {
 	int npcCount = m_NPCList.Num();
 	for (int i = 0; i < npcCount; ++i )
@@ -51,7 +52,21 @@ void ReactionManager::CreateReactionEvent(FVector targetPosition, float radiusSQ
 			if ( distNpc < radiusSQ)
 			{ 
 				UWorld* npcWorld = npcChar->GetWorld();
-				DrawDebugSphere(npcWorld, npcPosition + FVector::UpVector * 200.0f, 50.0f, 32, FColor::Red, false, 5.0f);
+				FVector npcHead = npcPosition + FVector::UpVector * 200.0f;
+				bool hasHit = true;
+
+				if (reactionLOS == ReactionLOS_Visual)
+				{
+					FVector targetHigh = targetPosition + FVector::UpVector * 100.0f;
+					FHitResult hitData;
+					FCollisionQueryParams TraceParams(FName(TEXT("VictoreCore Trace")), true);
+					hasHit = !npcWorld->LineTraceSingleByChannel(hitData, npcHead, targetHigh, ECC_Pawn, TraceParams);
+				}
+
+				if ( hasHit )
+				{
+					DrawDebugSphere(npcWorld, npcHead, reactionLOS == ReactionLOS_Visual ? 50.0f : 60.0f, 32, reactionLOS == ReactionLOS_Visual ? FColor::Green : FColor::Red, false, 5.0f);
+				}				
 			}
 		}
 	}

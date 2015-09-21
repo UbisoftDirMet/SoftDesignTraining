@@ -8,11 +8,16 @@
 
 enum ReactionType
 {
-	ReactionType_Invalid,
 	ReactionType_Bang,
 	ReactionType_Bing,
 	ReactionType_Boom,
 	ReactionType_Count,
+};
+
+enum ReactionLOS
+{
+	ReactionLOS_Visual,
+	ReactionLOS_Sound,
 };
 
 class SOFTDESIGNTRAINING_API ReactionManager
@@ -32,5 +37,5 @@ public:
 	void RegisterNPC(ACharacter* npcCharacter);
 	void UnregisterNPC(ACharacter* npcCharacter);
 
-	void CreateReactionEvent(FVector targetPosition, float radius, ReactionType reactionType);
+	void CreateReactionEvent(FVector targetPosition, float radius, ReactionType reactionType, ReactionLOS reactionLOS);
 };

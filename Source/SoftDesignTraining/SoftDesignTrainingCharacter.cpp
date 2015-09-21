@@ -81,6 +81,7 @@ void ASoftDesignTrainingCharacter::PlaceBomb()
 	ReactionManager* reactionManager = ReactionManager::GetInstance();
 	if (reactionManager)
 	{
-		reactionManager->CreateReactionEvent(GetActorLocation(), 25000.0f, ReactionType_Boom);
+		reactionManager->CreateReactionEvent(GetActorLocation(), 6250000.0f, ReactionType_Boom, ReactionLOS_Sound);
+		reactionManager->CreateReactionEvent(GetActorLocation(), 6250000.0f, ReactionType_Boom, ReactionLOS_Visual);
 	}
 }
