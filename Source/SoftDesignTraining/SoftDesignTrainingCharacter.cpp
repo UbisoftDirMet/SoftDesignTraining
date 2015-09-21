@@ -2,6 +2,9 @@
 
 #include "SoftDesignTraining.h"
 #include "SoftDesignTrainingCharacter.h"
+//#include "Engine/Public/DrawDebugHelpers.h"
+#include "ReactionManager.h"
+#include "DrawDebugHelpers.h"
 
 ASoftDesignTrainingCharacter::ASoftDesignTrainingCharacter()
 {
@@ -31,5 +34,45 @@ ASoftDesignTrainingCharacter::ASoftDesignTrainingCharacter()
 	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
 	TopDownCameraComponent->AttachTo(CameraBoom, USpringArmComponent::SocketName);
 	TopDownCameraComponent->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
 }
+
+void ASoftDesignTrainingCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	FVector currentLocation = GetActorLocation();
+
+	ReactionManager* reactionManager = ReactionManager::GetInstance();
+	if (reactionManager)
+	{
+		UWorld* currentWorld = GetWorld();
+
+		int npcCount = reactionManager->m_NPCList.Num();
+
+		for (int i = 0; i < npcCount; ++i)
+		{
+			ACharacter* npcCharacter = reactionManager->m_NPCList[i];
+			if (npcCharacter)
+			{
+				DrawDebugLine(currentWorld, currentLocation, npcCharacter->GetActorLocation(), FColor::Red, false);
+			}
+		}
+	}
+}
+
+void ASoftDesignTrainingCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+void ASoftDesignTrainingCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	ReactionManager* reactionManager = ReactionManager::GetInstance();
+	if (reactionManager)
+	{
+		reactionManager->Destroy();
+	}
+}
+
