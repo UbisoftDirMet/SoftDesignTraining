@@ -76,3 +76,11 @@ void ASoftDesignTrainingCharacter::EndPlay(const EEndPlayReason::Type EndPlayRea
 	}
 }
 
+void ASoftDesignTrainingCharacter::PlaceBomb()
+{
+	ReactionManager* reactionManager = ReactionManager::GetInstance();
+	if (reactionManager)
+	{
+		reactionManager->CreateReactionEvent(GetActorLocation(), 25000.0f, ReactionType_Boom);
+	}
+}

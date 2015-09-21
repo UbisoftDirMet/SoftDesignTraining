@@ -3,6 +3,7 @@
 #include "SoftDesignTraining.h"
 #include "SoftDesignTrainingPlayerController.h"
 #include "AI/Navigation/NavigationSystem.h"
+#include "SoftDesignTrainingCharacter.h"
 
 ASoftDesignTrainingPlayerController::ASoftDesignTrainingPlayerController()
 {
@@ -28,6 +29,8 @@ void ASoftDesignTrainingPlayerController::SetupInputComponent()
 
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ASoftDesignTrainingPlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &ASoftDesignTrainingPlayerController::OnSetDestinationReleased);
+
+	InputComponent->BindAction("PlaceBomb", IE_Pressed, this, &ASoftDesignTrainingPlayerController::OnPlaceBombPressed);
 
 	// support touch devices 
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ASoftDesignTrainingPlayerController::MoveToTouchLocation);
@@ -87,4 +90,17 @@ void ASoftDesignTrainingPlayerController::OnSetDestinationReleased()
 {
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
+}
+
+void ASoftDesignTrainingPlayerController::OnPlaceBombPressed()
+{
+	APawn* const pawn = GetPawn();
+	if (pawn)
+	{
+		ASoftDesignTrainingCharacter* sdtChar = Cast<ASoftDesignTrainingCharacter>(pawn);
+		if (sdtChar )
+		{
+			sdtChar->PlaceBomb();
+		}
+	}
 }

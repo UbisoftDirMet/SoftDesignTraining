@@ -27,5 +27,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
 	virtual void Tick(float DeltaSeconds) override;
+
+	void PlaceBomb();
 };
 
