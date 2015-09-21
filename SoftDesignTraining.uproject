@@ -1,13 +1,17 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{298962D7-4CFE-9E04-CB31-EF9AF5A9C928}",
+	"EngineAssociation": "{5190C220-4391-85D3-A4B9-D48350A52D25}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
 		{
 			"Name": "SoftDesignTraining",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"CoreUObject"
+			]
 		}
 	]
 }
