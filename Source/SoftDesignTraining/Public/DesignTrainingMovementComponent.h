@@ -12,8 +12,12 @@ UCLASS()
 class SOFTDESIGNTRAINING_API UDesignTrainingMovementComponent : public UCharacterMovementComponent
 {
 	GENERATED_BODY()
-	
-	
-	
-	
+
+protected:
+
+    //Init
+    virtual void InitializeComponent() override;
+
+    //Tick
+    virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 };

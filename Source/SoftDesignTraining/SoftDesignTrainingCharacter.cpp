@@ -2,8 +2,10 @@
 
 #include "SoftDesignTraining.h"
 #include "SoftDesignTrainingCharacter.h"
+#include "DesignTrainingMovementComponent.h"
 
-ASoftDesignTrainingCharacter::ASoftDesignTrainingCharacter()
+ASoftDesignTrainingCharacter::ASoftDesignTrainingCharacter(const FObjectInitializer& ObjectInitializer):
+Super(ObjectInitializer.SetDefaultSubobjectClass<UDesignTrainingMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);

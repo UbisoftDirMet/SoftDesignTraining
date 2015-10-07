@@ -18,7 +18,7 @@ class ASoftDesignTrainingCharacter : public ACharacter
 
 
 public:
-	ASoftDesignTrainingCharacter();
+	ASoftDesignTrainingCharacter(const FObjectInitializer& ObjectInitializer);
 
 	/** Returns TopDownCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
