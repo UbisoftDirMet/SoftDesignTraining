@@ -4,6 +4,8 @@
 #include "SoftDesignTrainingPlayerController.h"
 #include "AI/Navigation/NavigationSystem.h"
 
+#include "DesignTrainingMovementComponent.h"
+
 #include "DrawDebugHelpers.h"
 
 ASoftDesignTrainingPlayerController::ASoftDesignTrainingPlayerController()
@@ -67,7 +69,7 @@ void ASoftDesignTrainingPlayerController::MoveToTouchLocation(const ETouchIndex:
 	}
 }
 
-void ASoftDesignTrainingPlayerController::SetNewMoveDestination(const FVector DestLocation)
+void ASoftDesignTrainingPlayerController::SetNewMoveDestination(const FVector& DestLocation)
 {
 	APawn* const Pawn = GetPawn();
 	if (Pawn)
@@ -128,9 +130,6 @@ void ASoftDesignTrainingPlayerController::OnTakeCoverPressed()
 
         UWorld* currentWorld = GetWorld();
 
-        //DrawDebugLine(currentWorld, actorLocation, coverTestEnd, FColor::Magenta, false, 1.0f);
-        //DrawDebugSphere(currentWorld, actorLocation, 10.0f, 10, FColor::Magenta, false, 1.0f);
-
         static FName InitialCoverSweepTestName = TEXT("InitialCoverSweepTest");
         FHitResult hitResult;
         FQuat shapeRot = FQuat::Identity;
@@ -139,17 +138,24 @@ void ASoftDesignTrainingPlayerController::OnTakeCoverPressed()
         currentWorld->DebugDrawTraceTag = InitialCoverSweepTestName;
         FCollisionObjectQueryParams collObjQueryParams(ECC_WorldStatic);
         
+        UDesignTrainingMovementComponent* charMovement = Cast<UDesignTrainingMovementComponent>(Pawn->GetMovementComponent());
+
         if (currentWorld->SweepSingleByObjectType(hitResult, coverTestStart, coverTestEnd, shapeRot, collObjQueryParams, collShape, collQueryParams))
         {
-            if (ValidateCover(hitResult))
+            if (charMovement->ValidateCover(hitResult))
             {
-
+                MoveToCoverDestination(hitResult.Location);
             }
         }
     }
 }
 
-bool ASoftDesignTrainingPlayerController::ValidateCover(FHitResult& coverHitResult)
+void ASoftDesignTrainingPlayerController::MoveToCoverDestination(const FVector& DestLocation)
 {
-    return true;
+    APawn* const Pawn = GetPawn();
+    if (Pawn)
+    {
+        UNavigationSystem* const NavSys = GetWorld()->GetNavigationSystem();       
+        NavSys->SimpleMoveToLocation(this, DestLocation);
+    }
 }

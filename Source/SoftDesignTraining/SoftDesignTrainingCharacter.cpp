@@ -33,18 +33,4 @@ Super(ObjectInitializer.SetDefaultSubobjectClass<UDesignTrainingMovementComponen
 	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
 	TopDownCameraComponent->AttachTo(CameraBoom, USpringArmComponent::SocketName);
 	TopDownCameraComponent->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
-    bIsInHighCover = false;
-    bIsInLowCover = false;
-    bIsInCover = false;
-}
-
-void ASoftDesignTrainingCharacter::Cover(const FVector& worldPosition)
-{
-    bIsInCover = true;
-}
-
-void ASoftDesignTrainingCharacter::StopCover()
-{
-    bIsInCover = false;
 }

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "SoftDesignTrainingCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DesignTrainingMovementComponent.generated.h"
 
@@ -13,6 +14,9 @@ class SOFTDESIGNTRAINING_API UDesignTrainingMovementComponent : public UCharacte
 {
 	GENERATED_BODY()
 
+public:
+    virtual void SetUpdatedComponent(USceneComponent* NewUpdatedComponent) override;
+
 protected:
 
     //Init
@@ -20,4 +24,20 @@ protected:
 
     //Tick
     virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+protected:
+
+    /** Character movement component belongs to */
+    UPROPERTY()
+    ASoftDesignTrainingCharacter* SoftDesignCharacterOwner;
+
+public:
+    UFUNCTION(BlueprintCallable, Category = "Character Movement: Cover")
+    bool ValidateCover(FHitResult& coverHitResult);
+
+    UFUNCTION(BlueprintCallable, Category = "Character Movement: Cover")
+    virtual void TakeCover(const FVector& worldPosition);
+
+    UFUNCTION(BlueprintCallable, Category = "Character Movement: Cover")
+    virtual void StopCover();
 };

@@ -27,7 +27,7 @@ protected:
 	void MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location);
 	
 	/** Navigate player to the given world location. */
-	void SetNewMoveDestination(const FVector DestLocation);
+	void SetNewMoveDestination(const FVector& DestLocation);
 
 	/** Input handlers for SetDestination action. */
 	void OnSetDestinationPressed();
@@ -40,7 +40,7 @@ protected:
 
     /** Cover inputs*/
     void OnTakeCoverPressed();
-    bool ValidateCover(FHitResult& coverHitResult);
+    void MoveToCoverDestination(const FVector& DestLocation);
 
 };
 
