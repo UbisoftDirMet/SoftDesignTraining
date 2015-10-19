@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{5190C220-4391-85D3-A4B9-D48350A52D25}",
+	"EngineAssociation": "{F7BC41DC-4191-739E-78E3-0EACE85E3530}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -12,6 +12,13 @@
 				"Engine",
 				"CoreUObject"
 			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "Substance",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/offers/2f6439c2f9584f49809d9b13b16c2ba4"
 		}
 	]
 }
