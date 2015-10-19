@@ -54,7 +54,7 @@ void ASoftDesignTrainingCharacter::Tick(float DeltaTime)
 			ACharacter* npcCharacter = reactionManager->m_NPCList[i];
 			if (npcCharacter)
 			{
-				DrawDebugLine(currentWorld, currentLocation, npcCharacter->GetActorLocation(), FColor::Red, false);
+				//DrawDebugLine(currentWorld, currentLocation, npcCharacter->GetActorLocation(), FColor::Red, false);
 			}
 		}
 	}

@@ -48,7 +48,7 @@ void AAIBase::Tick( float DeltaTime )
 		SetActorLocation(actorLocation);
 	}
 
-	DrawDebugLine(GetWorld(), actorLocation, FVector::ZeroVector, FColor::Green, false);
+	//DrawDebugLine(GetWorld(), actorLocation, FVector::ZeroVector, FColor::Green, false);
 }
 
 // Called to bind functionality to input
