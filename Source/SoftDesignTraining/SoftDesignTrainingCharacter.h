@@ -3,6 +3,7 @@
 #include "GameFramework/Character.h"
 #include "SoftDesignTrainingCharacter.generated.h"
 
+
 UCLASS(Blueprintable)
 class ASoftDesignTrainingCharacter : public ACharacter
 {
@@ -15,7 +16,6 @@ class ASoftDesignTrainingCharacter : public ACharacter
 	/** Camera boom positioning the camera above the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
-
 
 public:
 	ASoftDesignTrainingCharacter(const FObjectInitializer& ObjectInitializer);
@@ -34,5 +34,11 @@ public:
 
     UPROPERTY(BlueprintReadOnly, Category = Character)
     uint32 bIsInCover : 1;
+
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
+	virtual void Tick(float DeltaSeconds) override;
+
+	void PlaceBomb();
 };
 

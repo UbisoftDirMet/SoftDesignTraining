@@ -42,6 +42,8 @@ protected:
     void OnTakeCoverPressed();
     void MoveToCoverDestination(const FVector& DestLocation);
 
+
+	void OnPlaceBombPressed();
 };
 
 
