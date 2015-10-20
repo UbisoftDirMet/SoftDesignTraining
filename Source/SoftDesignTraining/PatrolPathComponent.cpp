@@ -10,7 +10,7 @@ UPatrolPathComponent::UPatrolPathComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -20,6 +20,8 @@ UPatrolPathComponent::UPatrolPathComponent()
 void UPatrolPathComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	//AActor* MyActor = m_Owner;
+	//TArray<AActor*> MyActor_Children = MyActor->Children;
 
 	// ...
 	
