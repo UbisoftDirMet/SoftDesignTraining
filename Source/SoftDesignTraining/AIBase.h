@@ -9,7 +9,7 @@
 
 class UPatrolPathComponent;
 
-UCLASS()
+UCLASS(Blueprintable)
 class SOFTDESIGNTRAINING_API AAIBase : public ACharacter
 {
 	GENERATED_BODY()
@@ -31,12 +31,14 @@ public:
 	virtual void SetNewMoveDestination(const FVector DestLocation);
 	virtual void ProcessReaction( ReactionEvent* reactionEvent);
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AiBase")
+	bool m_IsBlind;
+
 private:
 	unsigned long m_CurrentWayPoint;
 	UPatrolPathComponent* m_PatrolPath;
 	FVector m_NextDestination;
 
-	bool m_IsBlind;
 	float m_BlindTimeLeft;
-
 };

@@ -124,4 +124,3 @@ void AAIBase::ProcessReaction(ReactionEvent* reactionEvent)
 		m_BlindTimeLeft = 3.0f;
 	}
 }
-
