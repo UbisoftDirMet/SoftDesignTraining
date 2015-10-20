@@ -2,6 +2,7 @@
 
 #include "SoftDesignTraining.h"
 #include "PatrolPathManager.h"
+#include <time.h>
 
 PatrolPathManager* PatrolPathManager::m_Instance;
 
@@ -9,7 +10,7 @@ PatrolPathManager* PatrolPathManager::GetInstance()
 {
 	if (!m_Instance)
 	{
-		m_Instance = new PatrolPathManager();
+        m_Instance = new PatrolPathManager();
 	}
 
 	return m_Instance;
@@ -17,6 +18,7 @@ PatrolPathManager* PatrolPathManager::GetInstance()
 
 PatrolPathManager::PatrolPathManager()
 {
+    srand(time(NULL));
 }
 
 PatrolPathManager::~PatrolPathManager()
