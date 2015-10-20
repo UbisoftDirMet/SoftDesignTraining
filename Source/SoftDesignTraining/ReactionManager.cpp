@@ -4,6 +4,7 @@
 #include "ReactionManager.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/World.h"
+#include "AIBase.h"
 
 ReactionManager* ReactionManager::m_Instance;
 
@@ -39,6 +40,8 @@ void ReactionManager::UnregisterNPC(AActor* npcCharacter)
 
 void ReactionManager::CreateReactionEvent(FVector targetPosition, float radiusSQ, ReactionType reactionType, ReactionLOS reactionLOS)
 {
+	ReactionEvent newEvent(NULL, targetPosition, reactionType, reactionLOS);
+
 	int npcCount = m_NPCList.Num();
 	for (int i = 0; i < npcCount; ++i )
 	{
@@ -65,7 +68,11 @@ void ReactionManager::CreateReactionEvent(FVector targetPosition, float radiusSQ
 
 				if ( hasHit )
 				{
-					DrawDebugSphere(npcWorld, npcHead, reactionLOS == ReactionLOS_Visual ? 50.0f : 60.0f, 32, reactionLOS == ReactionLOS_Visual ? FColor::Green : FColor::Red, false, 5.0f);
+					AAIBase* npcAiBase = Cast<AAIBase>(npcChar);
+					if (npcAiBase != NULL)
+					{
+						npcAiBase->ProcessReaction(&newEvent);
+					}
 				}				
 			}
 		}

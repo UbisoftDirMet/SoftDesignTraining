@@ -15,7 +15,8 @@ AAIBase::AAIBase()
 	PrimaryActorTick.bCanEverTick = true;
 	m_CurrentWayPoint = 0;
 	m_PatrolPath = nullptr;
-
+	
+	m_IsBlind = false;
 }
 
 // Called when the game starts or when spawned
@@ -60,10 +61,29 @@ void AAIBase::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	//DrawDebugLine(GetWorld(), actorLocation, FVector::ZeroVector, FColor::Green, false);
-
 	FVector actorLocation = GetActorLocation();
+	DrawDebugLine(GetWorld(), actorLocation, FVector::ZeroVector, FColor::Green, false);
 
+	if (m_IsBlind)
+	{
+		if (m_BlindTimeLeft > 0)
+		{
+			m_BlindTimeLeft -= DeltaTime;
+			SetNewMoveDestination(actorLocation);
+			return;
+		}
+		else
+		{
+			m_BlindTimeLeft = 0.0f;
+			m_IsBlind = false;
+
+			if (m_PatrolPath)
+			{
+				m_PatrolPath->GetNextWayPoint(m_CurrentWayPoint, m_NextDestination);
+				SetNewMoveDestination(m_NextDestination);
+			}
+		}
+	}
 	// check if we are close enough to our next destination
 	if ((actorLocation - m_NextDestination).Size2D() < 50.f)
 	{
@@ -73,8 +93,7 @@ void AAIBase::Tick( float DeltaTime )
 			m_PatrolPath->GetNextWayPoint(m_CurrentWayPoint, m_NextDestination);
 			SetNewMoveDestination(m_NextDestination);
 		}
-	}
-
+	}	
 }
 
 // Called to bind functionality to input
@@ -87,5 +106,22 @@ void AAIBase::SetNewMoveDestination(const FVector DestLocation)
 {
 	UNavigationSystem* const NavSys = GetWorld()->GetNavigationSystem();
 	NavSys->SimpleMoveToLocation(GetController(), DestLocation);
+}
+
+void AAIBase::ProcessReaction(ReactionEvent* reactionEvent)
+{
+	if (!reactionEvent )
+		return;
+	FVector npcPosition = GetActorLocation();
+	FVector npcHead = npcPosition + FVector::UpVector * 200.0f;
+	UWorld* npcWorld = GetWorld();
+
+	DrawDebugSphere(npcWorld, npcHead, reactionEvent->m_ReactionLOS == ReactionLOS_Visual ? 50.0f : 60.0f, 32, reactionEvent->m_ReactionLOS == ReactionLOS_Visual ? FColor::Green : FColor::Red, false, reactionEvent->m_ReactionLOS == ReactionLOS_Visual ? 3.0f : 0.5f);
+
+	if (reactionEvent->m_ReactionLOS == ReactionLOS_Visual)
+	{
+		m_IsBlind = true;
+		m_BlindTimeLeft = 3.0f;
+	}
 }
 

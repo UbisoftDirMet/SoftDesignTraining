@@ -3,6 +3,8 @@
 #pragma once
 
 #include "GameFramework/Character.h"
+#include "ReactionEvent.h"
+
 #include "AIBase.generated.h"
 
 class UPatrolPathComponent;
@@ -27,11 +29,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	virtual void SetNewMoveDestination(const FVector DestLocation);
+	virtual void ProcessReaction( ReactionEvent* reactionEvent);
 
 private:
 	unsigned long m_CurrentWayPoint;
 	UPatrolPathComponent* m_PatrolPath;
 	FVector m_NextDestination;
 
+	bool m_IsBlind;
+	float m_BlindTimeLeft;
 
 };

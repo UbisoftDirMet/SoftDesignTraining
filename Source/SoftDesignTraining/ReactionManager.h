@@ -2,23 +2,11 @@
 
 #pragma once
 
+#include "ReactionEvent.h"
+
 /**
  * 
  */
-
-enum ReactionType
-{
-	ReactionType_Bang,
-	ReactionType_Bing,
-	ReactionType_Boom,
-	ReactionType_Count,
-};
-
-enum ReactionLOS
-{
-	ReactionLOS_Visual,
-	ReactionLOS_Sound,
-};
 
 class SOFTDESIGNTRAINING_API ReactionManager
 {
