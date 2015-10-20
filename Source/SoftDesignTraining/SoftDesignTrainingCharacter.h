@@ -3,6 +3,7 @@
 #include "GameFramework/Character.h"
 #include "SoftDesignTrainingCharacter.generated.h"
 
+
 UCLASS(Blueprintable)
 class ASoftDesignTrainingCharacter : public ACharacter
 {

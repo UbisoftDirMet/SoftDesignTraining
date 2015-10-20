@@ -5,6 +5,8 @@
 #include "GameFramework/Character.h"
 #include "AIBase.generated.h"
 
+class UPatrolPathComponent;
+
 UCLASS()
 class SOFTDESIGNTRAINING_API AAIBase : public ACharacter
 {
@@ -24,7 +26,12 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetNewMoveDestination(const FVector DestLocation);
 
-	
-	
+private:
+	unsigned long m_CurrentWayPoint;
+	UPatrolPathComponent* m_PatrolPath;
+	FVector m_NextDestination;
+
+
 };

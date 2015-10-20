@@ -27,12 +27,12 @@ void ReactionManager::Destroy()
 	m_Instance = nullptr;
 }
 
-void ReactionManager::RegisterNPC(ACharacter* npcCharacter)
+void ReactionManager::RegisterNPC(AActor* npcCharacter)
 {
 	m_NPCList.Add(npcCharacter);
 }
 
-void ReactionManager::UnregisterNPC(ACharacter* npcCharacter)
+void ReactionManager::UnregisterNPC(AActor* npcCharacter)
 {
 	m_NPCList.Remove(npcCharacter);
 }
@@ -42,7 +42,7 @@ void ReactionManager::CreateReactionEvent(FVector targetPosition, float radiusSQ
 	int npcCount = m_NPCList.Num();
 	for (int i = 0; i < npcCount; ++i )
 	{
-		ACharacter* npcChar = m_NPCList[i];
+		AActor* npcChar = m_NPCList[i];
 		if (npcChar)
 		{
 			FVector npcPosition = npcChar->GetActorLocation();

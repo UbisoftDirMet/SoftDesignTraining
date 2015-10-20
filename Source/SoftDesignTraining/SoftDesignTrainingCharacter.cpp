@@ -6,6 +6,7 @@
 #include "ReactionManager.h"
 #include "DrawDebugHelpers.h"
 
+
 ASoftDesignTrainingCharacter::ASoftDesignTrainingCharacter()
 {
 	// Set size for player capsule
@@ -26,7 +27,7 @@ ASoftDesignTrainingCharacter::ASoftDesignTrainingCharacter()
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->AttachTo(RootComponent);
 	CameraBoom->bAbsoluteRotation = true; // Don't want arm to rotate when character does
-	CameraBoom->TargetArmLength = 800.f;
+	CameraBoom->TargetArmLength = 2000.f;
 	CameraBoom->RelativeRotation = FRotator(-60.f, 0.f, 0.f);
 	CameraBoom->bDoCollisionTest = false; // Don't want to pull camera in when it collides with level
 
@@ -51,7 +52,7 @@ void ASoftDesignTrainingCharacter::Tick(float DeltaTime)
 
 		for (int i = 0; i < npcCount; ++i)
 		{
-			ACharacter* npcCharacter = reactionManager->m_NPCList[i];
+			AActor* npcCharacter = reactionManager->m_NPCList[i];
 			if (npcCharacter)
 			{
 				//DrawDebugLine(currentWorld, currentLocation, npcCharacter->GetActorLocation(), FColor::Red, false);
