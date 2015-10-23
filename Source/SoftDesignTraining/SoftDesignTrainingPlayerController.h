@@ -27,11 +27,23 @@ protected:
 	void MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location);
 	
 	/** Navigate player to the given world location. */
-	void SetNewMoveDestination(const FVector DestLocation);
+	void SetNewMoveDestination(const FVector& DestLocation);
 
 	/** Input handlers for SetDestination action. */
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
+
+
+    /** Handle direct nav input*/
+    void MoveForward(float value);
+    void MoveRight(float value);
+
+    /** Cover inputs*/
+    void OnTakeCoverPressed();
+    void MoveToCoverDestination(const FVector& DestLocation);
+
+
+	void OnPlaceBombPressed();
 };
 
 
